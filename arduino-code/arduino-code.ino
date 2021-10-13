@@ -11,7 +11,7 @@ const byte CORRECT_CODE[CODE_LENGTH] = {0, 1, 2, 3, 4};
 // What pins the LEDs go to on arduino. 
 const byte LED_PINS[CODE_LENGTH] = {9, 8};
 
-// GLOBALS
+
 // Using internal pull-up resistors on buttons therefore when they are not being pressed they should read HIGH.
 bool lastButtonState[] = {HIGH, HIGH, HIGH, HIGH};
 // What position the code is actually on.
