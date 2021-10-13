@@ -1,6 +1,5 @@
 #define DEBUG
 
-// Constants
 // How many buttons we use. Currently 5: Red, Blue, Green, Yellow and White
 const byte NUM_OF_BUTTONS = 5;
 // What pins the buttons go to on arduino. 
