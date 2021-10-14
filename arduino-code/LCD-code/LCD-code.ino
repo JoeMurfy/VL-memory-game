@@ -50,6 +50,9 @@ LCDWIKI_KBV mylcd(ILI9486,A3,A2,A1,A0,A4); //model,cs,cd,wr,rd,reset
 #define YELLOW  0xFFE0
 #define WHITE   0xFFFF
 
+void sequenceCorrectLCD();
+void enterSequenceLCD();
+
 void setup() 
 {
   Serial.begin(9600);
@@ -60,23 +63,48 @@ void setup()
 
 void loop() 
 {
+  enterSequenceLCD();
 
+  sequenceCorrectLCD();
+
+}
+
+void enterSequenceLCD(){
+  mylcd.Fill_Screen(BLACK);
   mylcd.Set_Rotation(1);
-  mylcd.Set_Draw_color(BLACK);
-  mylcd.Draw_Fast_VLine(1, 100, 40);
+  mylcd.Set_Text_colour(WHITE);
+  mylcd.Set_Text_Back_colour(BLACK);
+  mylcd.Set_Text_Size(9);
+  mylcd.Print_String("ENTER", CENTER, 30);
+  mylcd.Print_String("SEQUENCE", CENTER, 110);
+  
+  mylcd.Set_Text_colour(WHITE);
+  mylcd.Set_Text_Back_colour(RED);
+  mylcd.Set_Text_Size(5);
+  mylcd.Set_Text_Size(8);
+  mylcd.Print_String("      ", CENTER, 200);
+  mylcd.Print_String("      ", CENTER, 240);
+  mylcd.Print_String(" ***** ", CENTER, 220);
+
+  delay(10000);
+}
+
+void sequenceCorrectLCD(){
+  mylcd.Fill_Screen(BLACK);
+  mylcd.Set_Rotation(1);
   mylcd.Set_Text_colour(YELLOW);
   mylcd.Set_Text_Back_colour(BLACK);
-  mylcd.Set_Text_Size(5);
-  mylcd.Print_String("Sequence Correct", 1, 120);
+  mylcd.Set_Text_Size(9);
+  mylcd.Print_String("SEQUENCE", CENTER, 30);
+  mylcd.Print_String("CORRECT", CENTER, 110);
   
   mylcd.Set_Text_colour(BLACK);
   mylcd.Set_Text_Back_colour(YELLOW);
   mylcd.Set_Text_Size(5);
   mylcd.Set_Text_Size(8);
-  mylcd.Print_String("      ", 90, 180);
-  mylcd.Print_String("      ", 90, 220);
-  mylcd.Print_String(" 6598 ", 90, 200);
-
-
+  mylcd.Print_String("      ", CENTER, 200);
+  mylcd.Print_String("      ", CENTER, 240);
+  mylcd.Print_String(" 6598 ", CENTER, 220);
   delay(10000);
+
 }
