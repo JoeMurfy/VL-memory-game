@@ -1,3 +1,8 @@
+/*
+ * Joe Murphy 14.10.2021
+ * Created for Volatile Laboratories.
+ */
+
 #include <LCDWIKI_GUI.h> //Core graphics library
 #include <LCDWIKI_KBV.h> //Hardware-specific library
 
@@ -106,11 +111,6 @@ void loop() {
           delay(40);
           digitalWrite(LED_PINS[0], LOW);
           Serial.println(F("Incorrect"));
-          clearLCD();
-          mylcd.Set_Rotation(1);
-          mylcd.Set_Text_colour(WHITE);
-          mylcd.Set_Text_Back_colour(RED);
-          mylcd.Print_String(test, CENTER, 220);
           delay(10000);
         }
       }
