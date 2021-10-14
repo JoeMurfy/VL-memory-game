@@ -161,7 +161,7 @@ void enterSequenceLCD(){
   mylcd.Print_String("      ", CENTER, 240);
   mylcd.Print_String(" _____ ", CENTER, 220);
 
-  delay(10000);
+  delay(9999999999);
 }
 
 //Function to display reward on LCD.
@@ -182,7 +182,7 @@ void sequenceCorrectLCD(){
   mylcd.Print_String("      ", CENTER, 200);
   mylcd.Print_String("      ", CENTER, 240);
   mylcd.Print_String(" 6598 ", CENTER, 220);
-  delay(100000);
+  delay(9999999999);
 
 }
 
