@@ -5,7 +5,6 @@
 
 #include <LCDWIKI_GUI.h> //Core graphics library
 #include <LCDWIKI_KBV.h> //Hardware-specific library
-
 //LCD setup.
 LCDWIKI_KBV mylcd(ILI9486,A3,A2,A1,A0,A4); //model,cs,cd,wr,rd,reset
 
@@ -31,6 +30,8 @@ void clearLCD();
 
 
 // Constants
+// Piezo Buzzer plugged into which arduino pin.
+const int BUZZER = 35;
 // How many buttons we use. Currently 5: Red, Blue, Green, Yellow and White
 const byte NUM_OF_BUTTONS = 5;
 // What pins the buttons go to on arduino.
@@ -50,6 +51,7 @@ int codePosition = 0;
 unsigned long lastDebounceTime = 0;
 unsigned long debounceDelay = 50;
 
+
 // Setup, runs once on startup.
 void setup() {
 
@@ -63,6 +65,10 @@ void setup() {
     pinMode(LED_PINS[i], OUTPUT);
   }
 
+  
+  pinMode(BUZZER, OUTPUT); // Set buzzer as output - pin 35
+
+  
   #ifdef DEBUG
     Serial.begin(9600);
     Serial.println(F("Debug begin."));
@@ -74,7 +80,11 @@ void setup() {
   clearLCD();
   Serial.println(mylcd.Read_ID(), HEX);
   enterSequenceLCD();
-
+  
+//  tone(BUZZER, 1000); 
+//  delay(1000);        // ...for 1 sec
+//  noTone(BUZZER);     // Stop sound...
+// 
 }
 
 void loop() {
@@ -104,14 +114,14 @@ void loop() {
           #endif
         }
         
-        // Incorrect so resets code and turns flashes red LED.
+        // Incorrect so resets code and flashes red LED.
         else {
           codePosition = 0;
           digitalWrite(LED_PINS[0], HIGH);
           delay(40);
           digitalWrite(LED_PINS[0], LOW);
           Serial.println(F("Incorrect"));
-          delay(10000);
+          delay(40); 
         }
       }
 
@@ -124,6 +134,7 @@ void loop() {
   if(codePosition == CODE_LENGTH){
     while(true){
     reward();
+    pinMode(BUZZER, OUTPUT); 
     }
   }
 
@@ -135,7 +146,7 @@ void reward(){
   #ifdef DEBUG
     Serial.println(F("Puzzle Solved!"));
   #endif
-
+  
   // Turn on Green LED
   digitalWrite(LED_PINS[1], HIGH);
   clearLCD();
@@ -155,35 +166,32 @@ void enterSequenceLCD(){
   
   mylcd.Set_Text_colour(WHITE);
   mylcd.Set_Text_Back_colour(RED);
-  mylcd.Set_Text_Size(5);
   mylcd.Set_Text_Size(8);
   mylcd.Print_String("      ", CENTER, 200);
   mylcd.Print_String("      ", CENTER, 240);
   mylcd.Print_String(" _____ ", CENTER, 220);
 
-  delay(9999999999);
 }
 
 //Function to display reward on LCD.
 void sequenceCorrectLCD(){
-  
-  mylcd.Fill_Screen(BLACK);
+  mylcd.Fill_Screen(YELLOW);
+  while(true){
+//  mylcd.Fill_Screen(BLACK);
   mylcd.Set_Rotation(1);
-  mylcd.Set_Text_colour(YELLOW);
+  mylcd.Set_Text_colour(BLACK);
   mylcd.Set_Text_Back_colour(BLACK);
   mylcd.Set_Text_Size(9);
   mylcd.Print_String("SEQUENCE", CENTER, 30);
   mylcd.Print_String("CORRECT", CENTER, 110);
-  
   mylcd.Set_Text_colour(BLACK);
-  mylcd.Set_Text_Back_colour(YELLOW);
-  mylcd.Set_Text_Size(5);
-  mylcd.Set_Text_Size(8);
-  mylcd.Print_String("      ", CENTER, 200);
-  mylcd.Print_String("      ", CENTER, 240);
+//  mylcd.Set_Text_Back_colour(YELLOW);;
+  mylcd.Set_Text_Size(11);
+//  mylcd.Print_String("      ", CENTER, 200);
+//  mylcd.Print_String("      ", CENTER, 240);
   mylcd.Print_String(" 6598 ", CENTER, 220);
-  delay(9999999999);
-
+  delay(999999999);
+  }
 }
 
 // Function to clear LCD screen.
